@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
-// Background image moved to public folder for Vercel deployment
-const bgImg = "/img3.jpg";
+// Background image moved to public folder for Vercel deployment - optimized to WebP format
+const bgImg = "/img3.webp";
 
 export default function Login() {
   const [email, setEmail] = useState("");

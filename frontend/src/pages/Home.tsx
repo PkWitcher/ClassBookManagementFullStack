@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-// Images moved to public folder for Vercel deployment
-const img1 = "/img1.jpg";
-const img2 = "/img2.jpg";
-const bg = "/bgImg.jpg";
+// Images moved to public folder for Vercel deployment - optimized to WebP format
+const img1 = "/img1.webp";
+const img2 = "/img2.webp";
+const bg = "/bgImg.webp";
 const logo = "/react.svg";
 
 export default function Home() {

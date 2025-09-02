@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
 // Background image moved to public folder for Vercel deployment
-const bgImg = "/bgImg.jpg";
+const bgImg = "/bgImg.webp";
 
 export default function Register() {
   const [email, setEmail] = useState("");
