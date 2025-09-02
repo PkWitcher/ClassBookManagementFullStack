@@ -1,12 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
+import type { ReactNode } from "react";
 import Notification from "../components/Notification";
-import type { NotificationProps } from "../components/Notification";
 
 export interface NotificationData {
   id: string;
