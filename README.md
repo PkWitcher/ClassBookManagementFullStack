@@ -14,6 +14,7 @@ A modern, full-stack web application for managing class bookings, sessions, and 
 ## 🚀 Tech Stack
 
 ### Frontend
+
 - **React 19** with TypeScript
 - **Vite** for fast development and building
 - **React Router DOM** for navigation
@@ -21,6 +22,7 @@ A modern, full-stack web application for managing class bookings, sessions, and 
 - **Custom CSS** with modern design principles
 
 ### Backend
+
 - **Node.js** with Express.js
 - **TypeScript** for type safety
 - **Prisma** as ORM
@@ -30,19 +32,21 @@ A modern, full-stack web application for managing class bookings, sessions, and 
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - PostgreSQL 12+
 - npm or yarn
 
 ## 🛠️ Installation
 
 ### 1. Clone the repository
+
 ```bash
 git clone <your-repo-url>
 cd ClassBook
 ```
 
 ### 2. Install dependencies
+
 ```bash
 # Install backend dependencies
 cd backend
@@ -54,9 +58,11 @@ npm install
 ```
 
 ### 3. Set up environment variables
+
 Create `.env` files in both `backend/` and `frontend/` directories:
 
 **Backend (.env):**
+
 ```env
 DATABASE_URL="postgresql://username:password@localhost:5432/classbook"
 JWT_SECRET="your-secret-key"
@@ -64,11 +70,13 @@ PORT=5001
 ```
 
 **Frontend (.env):**
+
 ```env
 VITE_API_URL="http://localhost:5001"
 ```
 
 ### 4. Set up database
+
 ```bash
 cd backend
 npx prisma migrate dev
@@ -76,6 +84,7 @@ npx prisma generate
 ```
 
 ### 5. Start development servers
+
 ```bash
 # Start all services (from project root)
 ./start-dev.sh
@@ -84,32 +93,52 @@ npx prisma generate
 # Backend
 cd backend && npm run dev
 
-# Frontend  
+# Frontend
 cd frontend && npm run dev
 ```
 
 ## 🧪 Testing
 
 ### Backend Tests
+
 ```bash
 cd backend
 npm test
 ```
 
+**Test Coverage:**
+
+- ✅ Authentication endpoints (register, login)
+- ✅ Session management (create, book, capacity validation)
+- ✅ Booking management (create, cancel, double-booking prevention)
+- ✅ Error handling and validation
+- ✅ Admin role verification
+
 ### Frontend Tests
+
 ```bash
 cd frontend
 npm test
 ```
 
+**Test Coverage:**
+
+- ✅ Session booking flow (render + submit)
+- ✅ Booking management (view, cancel)
+- ✅ Error handling and loading states
+- ✅ Admin vs user role differences
+- ✅ Component rendering and interactions
+
 ## 🚀 Deployment
 
 ### Frontend (Vercel)
+
 1. Build the frontend: `npm run build`
 2. Deploy to Vercel using their dashboard
 3. Set environment variables in Vercel
 
 ### Backend (Railway/Render/Heroku)
+
 1. Set up environment variables
 2. Deploy using your preferred platform
 3. Update frontend API URL to point to deployed backend
@@ -138,6 +167,12 @@ npm test
 - **Bookings**: User reservations for sessions
 - **Audit Logs**: System activity tracking
 
+### Documentation
+
+- 📋 [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture and design
+- 🗂️ [ERD.md](./ERD.md) - Entity Relationship Diagram
+- 📮 [ClassBook_API.postman_collection.json](./ClassBook_API.postman_collection.json) - Postman collection for API testing
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -157,3 +192,5 @@ For support, please open an issue in the GitHub repository or contact the develo
 ---
 
 **Built with ❤️ for modern class management**
+
+npm test -- --testPathPattern=bookings.test.ts

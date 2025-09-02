@@ -1,0 +1,760 @@
+{
+  "info": {
+    "name": "ClassBook Management API",
+    "description": "Complete API collection for ClassBook Management System - A class booking management application with user authentication, session management, and booking functionality.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://classbookmanagementfullstack.onrender.com",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "class_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "booking_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', response.token);",
+                  "    pm.collectionVariables.set('user_id', response.user.id);",
+                  "    console.log('JWT Token saved:', response.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login with user credentials and get JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', response.token);",
+                  "    pm.collectionVariables.set('user_id', response.user.id);",
+                  "    console.log('Admin JWT Token saved:', response.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login as admin user"
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication endpoints for user registration and login"
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Comprehensive health check with system status"
+          },
+          "response": []
+        },
+        {
+          "name": "Ping",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health/ping",
+              "host": ["{{base_url}}"],
+              "path": ["health", "ping"]
+            },
+            "description": "Simple ping test for connectivity"
+          },
+          "response": []
+        }
+      ],
+      "description": "Health monitoring endpoints"
+    },
+    {
+      "name": "Classes",
+      "item": [
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classes",
+              "host": ["{{base_url}}"],
+              "path": ["classes"]
+            },
+            "description": "Get all available classes (public endpoint)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Class by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classes/{{class_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["classes", "{{class_id}}"]
+            },
+            "description": "Get specific class with sessions"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Class (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('class_id', response.id);",
+                  "    console.log('Class ID saved:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Advanced React Development\",\n  \"description\": \"Learn advanced React concepts including hooks, context, and performance optimization\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/classes",
+              "host": ["{{base_url}}"],
+              "path": ["classes"]
+            },
+            "description": "Create a new class (admin only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Class management endpoints"
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "Get All Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            },
+            "description": "Get all available sessions with booking information"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Session (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('session_id', response.id);",
+                  "    console.log('Session ID saved:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classId\": \"{{class_id}}\",\n  \"dateTime\": \"2024-12-31T10:00:00.000Z\",\n  \"capacity\": 30\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            },
+            "description": "Create a new session for a class (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Book Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('booking_id', response.id);",
+                  "    console.log('Booking ID saved:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions/{{session_id}}/book",
+              "host": ["{{base_url}}"],
+              "path": ["sessions", "{{session_id}}", "book"]
+            },
+            "description": "Book a session (authenticated user)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Session management and booking endpoints"
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bookings",
+              "host": ["{{base_url}}"],
+              "path": ["bookings"]
+            },
+            "description": "Get current user's bookings"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Bookings (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bookings/all",
+              "host": ["{{base_url}}"],
+              "path": ["bookings", "all"]
+            },
+            "description": "Get all bookings in the system (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bookings/{{booking_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["bookings", "{{booking_id}}"]
+            },
+            "description": "Cancel a booking"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking Statistics (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bookings/stats",
+              "host": ["{{base_url}}"],
+              "path": ["bookings", "stats"]
+            },
+            "description": "Get booking statistics (admin only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Booking management endpoints"
+    },
+    {
+      "name": "Audit Logs",
+      "item": [
+        {
+          "name": "Get Audit Logs (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/audit-logs",
+              "host": ["{{base_url}}"],
+              "path": ["audit-logs"]
+            },
+            "description": "Get all audit logs (admin only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Audit logging endpoints"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Complete User Workflow",
+          "item": [
+            {
+              "name": "1. Register New User",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"testpass123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/register",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "register"]
+                }
+              }
+            },
+            {
+              "name": "2. Login User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 200) {",
+                      "    const response = pm.response.json();",
+                      "    pm.collectionVariables.set('jwt_token', response.token);",
+                      "    pm.collectionVariables.set('user_id', response.user.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"testpass123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "login"]
+                }
+              }
+            },
+            {
+              "name": "3. View Available Classes",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/classes",
+                  "host": ["{{base_url}}"],
+                  "path": ["classes"]
+                }
+              }
+            },
+            {
+              "name": "4. View Available Sessions",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["sessions"]
+                }
+              }
+            },
+            {
+              "name": "5. Book a Session",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {",
+                      "    const response = pm.response.json();",
+                      "    pm.collectionVariables.set('booking_id', response.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/sessions/{{session_id}}/book",
+                  "host": ["{{base_url}}"],
+                  "path": ["sessions", "{{session_id}}", "book"]
+                }
+              }
+            },
+            {
+              "name": "6. View My Bookings",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/bookings",
+                  "host": ["{{base_url}}"],
+                  "path": ["bookings"]
+                }
+              }
+            },
+            {
+              "name": "7. Cancel Booking",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/bookings/{{booking_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["bookings", "{{booking_id}}"]
+                }
+              }
+            }
+          ],
+          "description": "Complete user workflow from registration to booking cancellation"
+        },
+        {
+          "name": "Admin Workflow",
+          "item": [
+            {
+              "name": "1. Login as Admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 200) {",
+                      "    const response = pm.response.json();",
+                      "    pm.collectionVariables.set('jwt_token', response.token);",
+                      "    pm.collectionVariables.set('user_id', response.user.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "login"]
+                }
+              }
+            },
+            {
+              "name": "2. Create New Class",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {",
+                      "    const response = pm.response.json();",
+                      "    pm.collectionVariables.set('class_id', response.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Node.js Backend Development\",\n  \"description\": \"Learn server-side JavaScript with Node.js, Express, and databases\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/classes",
+                  "host": ["{{base_url}}"],
+                  "path": ["classes"]
+                }
+              }
+            },
+            {
+              "name": "3. Create Session for Class",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {",
+                      "    const response = pm.response.json();",
+                      "    pm.collectionVariables.set('session_id', response.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classId\": \"{{class_id}}\",\n  \"dateTime\": \"2024-02-01T14:00:00.000Z\",\n  \"capacity\": 25\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["sessions"]
+                }
+              }
+            },
+            {
+              "name": "4. View All Bookings",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/bookings/all",
+                  "host": ["{{base_url}}"],
+                  "path": ["bookings", "all"]
+                }
+              }
+            },
+            {
+              "name": "5. View Booking Statistics",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/bookings/stats",
+                  "host": ["{{base_url}}"],
+                  "path": ["bookings", "stats"]
+                }
+              }
+            },
+            {
+              "name": "6. View Audit Logs",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/audit-logs",
+                  "host": ["{{base_url}}"],
+                  "path": ["audit-logs"]
+                }
+              }
+            }
+          ],
+          "description": "Complete admin workflow from login to system management"
+        },
+        {
+          "name": "Error Scenarios",
+          "item": [
+            {
+              "name": "Double Booking Attempt",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/sessions/{{session_id}}/book",
+                  "host": ["{{base_url}}"],
+                  "path": ["sessions", "{{session_id}}", "book"]
+                },
+                "description": "Attempt to book the same session twice (should return 409 Conflict)"
+              }
+            },
+            {
+              "name": "Unauthorized Access",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/bookings/all",
+                  "host": ["{{base_url}}"],
+                  "path": ["bookings", "all"]
+                },
+                "description": "Access admin endpoint without admin role (should return 403 Forbidden)"
+              }
+            },
+            {
+              "name": "Invalid Session ID",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/sessions/invalid-id/book",
+                  "host": ["{{base_url}}"],
+                  "path": ["sessions", "invalid-id", "book"]
+                },
+                "description": "Book with invalid session ID (should return 404 Not Found)"
+              }
+            }
+          ],
+          "description": "Test error handling scenarios"
+        }
+      ],
+      "description": "Complete test scenarios for the API"
+    }
+  ]
+}
