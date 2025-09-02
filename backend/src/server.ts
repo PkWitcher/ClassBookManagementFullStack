@@ -17,7 +17,7 @@ const port = process.env.PORT || 5001;
 // ----------------------
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["https://classbookmanagementfullstack.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
