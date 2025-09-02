@@ -194,3 +194,13 @@ For support, please open an issue in the GitHub repository or contact the develo
 **Built with ❤️ for modern class management**
 
 npm test -- --testPathPattern=bookings.test.ts
+
+select \* from "User";
+
+select \* from "Booking" b ;
+
+select \* from "AuditLog" al ;
+
+select \* from "Session" s ;
+
+select \* from "Class" c ;
