@@ -1,8 +1,8 @@
-# 🎓 ClassBook - Class Booking Management System
+#  ClassBook - Class Booking Management System
 
 A modern, full-stack web application for managing class bookings, sessions, and user registrations.
 
-## ✨ Features
+##  Features
 
 - **User Authentication**: Secure login/registration system
 - **Class Management**: Create and manage different classes
@@ -11,7 +11,7 @@ A modern, full-stack web application for managing class bookings, sessions, and 
 - **Audit Logging**: Track all system activities
 - **Responsive Design**: Modern UI that works on all devices
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 ### Frontend
 
@@ -30,13 +30,13 @@ A modern, full-stack web application for managing class bookings, sessions, and 
 - **JWT** for authentication
 - **bcrypt** for password hashing
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - Node.js 18+
 - PostgreSQL 12+
 - npm or yarn
 
-## 🛠️ Installation
+##  Installation
 
 ### 1. Clone the repository
 
@@ -66,13 +66,13 @@ Create `.env` files in both `backend/` and `frontend/` directories:
 ```env
 DATABASE_URL="postgresql://username:password@localhost:5432/classbook"
 JWT_SECRET="your-secret-key"
-PORT=5001
+PORT=5432
 ```
 
 **Frontend (.env):**
 
 ```env
-VITE_API_URL="http://localhost:5001"
+VITE_API_URL="https://classbookmanagementfullstack.onrender.com"
 ```
 
 ### 4. Set up database
@@ -97,7 +97,7 @@ cd backend && npm run dev
 cd frontend && npm run dev
 ```
 
-## 🧪 Testing
+##  Testing
 
 ### Backend Tests
 
@@ -108,11 +108,11 @@ npm test
 
 **Test Coverage:**
 
-- ✅ Authentication endpoints (register, login)
-- ✅ Session management (create, book, capacity validation)
-- ✅ Booking management (create, cancel, double-booking prevention)
-- ✅ Error handling and validation
-- ✅ Admin role verification
+- Authentication endpoints (register, login)
+- Session management (create, book, capacity validation)
+- Booking management (create, cancel, double-booking prevention)
+- Error handling and validation
+- Admin role verification
 
 ### Frontend Tests
 
@@ -123,11 +123,11 @@ npm test
 
 **Test Coverage:**
 
-- ✅ Session booking flow (render + submit)
-- ✅ Booking management (view, cancel)
-- ✅ Error handling and loading states
-- ✅ Admin vs user role differences
-- ✅ Component rendering and interactions
+- Session booking flow (render + submit)
+- Booking management (view, cancel)
+- Error handling and loading states
+- Admin vs user role differences
+- Component rendering and interactions
 
 ## 🚀 Deployment
 
@@ -137,13 +137,13 @@ npm test
 2. Deploy to Vercel using their dashboard
 3. Set environment variables in Vercel
 
-### Backend (Railway/Render/Heroku)
+### Backend (Render)
 
 1. Set up environment variables
 2. Deploy using your preferred platform
 3. Update frontend API URL to point to deployed backend
 
-## 📱 Usage
+##  Usage
 
 1. **Register/Login**: Create an account or sign in
 2. **Browse Classes**: View available classes
@@ -151,7 +151,7 @@ npm test
 4. **Manage Bookings**: View and cancel your bookings
 5. **Admin Features**: Manage classes, sessions, and users (admin only)
 
-## 🔒 Security Features
+##  Security Features
 
 - JWT-based authentication
 - Password hashing with bcrypt
@@ -159,7 +159,7 @@ npm test
 - Admin-only access for sensitive operations
 - Input validation and sanitization
 
-## 📊 Database Schema
+## Database Schema
 
 - **Users**: Authentication and role management
 - **Classes**: Class definitions and descriptions
@@ -173,7 +173,7 @@ npm test
 - 🗂️ [ERD.md](./ERD.md) - Entity Relationship Diagram
 - 📮 [ClassBook_API.postman_collection.json](./ClassBook_API.postman_collection.json) - Postman collection for API testing
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -181,11 +181,11 @@ npm test
 4. Add tests for new functionality
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
 
-## 🆘 Support
+## Support
 
 For support, please open an issue in the GitHub repository or contact the development team.
 
@@ -193,14 +193,6 @@ For support, please open an issue in the GitHub repository or contact the develo
 
 **Built with ❤️ for modern class management**
 
+**for testing
+
 npm test -- --testPathPattern=bookings.test.ts
-
-select \* from "User";
-
-select \* from "Booking" b ;
-
-select \* from "AuditLog" al ;
-
-select \* from "Session" s ;
-
-select \* from "Class" c ;
