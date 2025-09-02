@@ -72,8 +72,32 @@ export default function Navbar() {
       }}
     >
       {/* Logo */}
-      <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-        <Link to="/" style={{ textDecoration: "none", color: "#ecf0f1" }}>
+      <div style={{ 
+        fontSize: "1.5rem", 
+        fontWeight: "bold", 
+        display: "flex", 
+        alignItems: "center", 
+        gap: "0.5rem" 
+      }}>
+        <Link 
+          to="/" 
+          style={{ 
+            textDecoration: "none", 
+            color: "#ecf0f1",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem"
+          }}
+        >
+          <img 
+            src="/favicon.svg" 
+            alt="ClassBook Logo" 
+            style={{ 
+              width: "32px", 
+              height: "32px",
+              borderRadius: "4px"
+            }} 
+          />
           ClassBook
         </Link>
       </div>
