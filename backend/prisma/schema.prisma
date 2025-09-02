@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  role      String     @default("user")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLogs AuditLog[]
+  bookings  Booking[]
+}
+
+model Class {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  sessions    Session[]
+}
+
+model Session {
+  id        String    @id @default(uuid())
+  classId   String
+  startTime DateTime
+  endTime   DateTime
+  capacity  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+  class     Class     @relation(fields: [classId], references: [id])
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  sessionId String
+  bookedAt  DateTime @default(now())
+  status    String   @default("booked")
+  session   Session  @relation(fields: [sessionId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, sessionId])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  entity    String
+  entityId  String
+  action    String
+  details   Json?
+  timestamp DateTime @default(now())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+}

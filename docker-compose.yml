@@ -1,0 +1,49 @@
+# ClassBook/docker-compose.yml
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: classbook-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: classbook-backend
+    restart: always
+    ports:
+      - "8000:5000" # Changed from 5000:5000 to 8000:5000
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
+      JWT_SECRET: "your-jwt-secret"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules # Important to prevent host node_modules from conflicting with container's
+    depends_on:
+      - db
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: classbook-frontend
+    restart: always
+    ports:
+      - "8001:3000" # Changed from 3000:3000 to 8001:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Important to prevent host node_modules from conflicting with container's
+    command: npm run dev
+
+volumes:
+  db-data:
