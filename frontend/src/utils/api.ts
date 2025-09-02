@@ -1,16 +1,19 @@
 // src/utils/api.ts
-import type { User, Class, Session, Booking } from '../types';
+import type { User, Class, Session, Booking } from "../types";
 
-const API_URL = 'http://localhost:5001';
+const API_URL = "https://classbookmanagementfullstack.onrender.com";
 
 // Generic fetch wrapper
-async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const token = localStorage.getItem('token');
+async function apiFetch<T>(
+  endpoint: string,
+  options?: RequestInit
+): Promise<T> {
+  const token = localStorage.getItem("token");
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options?.headers,
     },
@@ -39,16 +42,19 @@ async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> 
 //
 // ---------- AUTH ----------
 //
-export async function login(email: string, password: string): Promise<{ token: string; user: User }> {
-  return apiFetch('/auth/login', {
-    method: 'POST',
+export async function login(
+  email: string,
+  password: string
+): Promise<{ token: string; user: User }> {
+  return apiFetch("/auth/login", {
+    method: "POST",
     body: JSON.stringify({ email, password }),
   });
 }
 
 export async function register(email: string, password: string): Promise<User> {
-  return apiFetch('/auth/register', {
-    method: 'POST',
+  return apiFetch("/auth/register", {
+    method: "POST",
     body: JSON.stringify({ email, password }),
   });
 }
@@ -57,12 +63,15 @@ export async function register(email: string, password: string): Promise<User> {
 // ---------- CLASSES ----------
 //
 export async function getClasses(): Promise<Class[]> {
-  return apiFetch('/classes');
+  return apiFetch("/classes");
 }
 
-export async function createClass(newClass: { name: string; description: string }): Promise<Class> {
-  return apiFetch('/classes', {
-    method: 'POST',
+export async function createClass(newClass: {
+  name: string;
+  description: string;
+}): Promise<Class> {
+  return apiFetch("/classes", {
+    method: "POST",
     body: JSON.stringify(newClass),
   });
 }
@@ -71,19 +80,23 @@ export async function createClass(newClass: { name: string; description: string 
 // ---------- SESSIONS ----------
 //
 export async function getSessions(): Promise<Session[]> {
-  return apiFetch('/sessions');
+  return apiFetch("/sessions");
 }
 
-export async function createSession(newSession: { classId: string; dateTime: string; capacity: number }): Promise<Session> {
-  return apiFetch('/sessions', {
-    method: 'POST',
+export async function createSession(newSession: {
+  classId: string;
+  dateTime: string;
+  capacity: number;
+}): Promise<Session> {
+  return apiFetch("/sessions", {
+    method: "POST",
     body: JSON.stringify(newSession),
   });
 }
 
 export async function bookSession(sessionId: string): Promise<Booking> {
   return apiFetch(`/sessions/${sessionId}/book`, {
-    method: 'POST',
+    method: "POST",
   });
 }
 
@@ -91,12 +104,14 @@ export async function bookSession(sessionId: string): Promise<Booking> {
 // ---------- BOOKINGS ----------
 //
 export async function getBookings(): Promise<Booking[]> {
-  return apiFetch('/bookings');
+  return apiFetch("/bookings");
 }
 
-export async function cancelBooking(bookingId: string): Promise<{ success: boolean }> {
+export async function cancelBooking(
+  bookingId: string
+): Promise<{ success: boolean }> {
   return apiFetch(`/bookings/${bookingId}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 }
 
@@ -104,12 +119,12 @@ export async function cancelBooking(bookingId: string): Promise<{ success: boole
 // ---------- ALL BOOKINGS (ADMIN) ----------
 //
 export async function getAllBookings(): Promise<any[]> {
-  return apiFetch('/bookings/all');
+  return apiFetch("/bookings/all");
 }
 
 //
 // ---------- AUDIT LOGS ----------
 //
 export async function getAuditLogs(): Promise<any[]> {
-  return apiFetch('/audit-logs');
+  return apiFetch("/audit-logs");
 }
