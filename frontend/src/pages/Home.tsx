@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useNotification } from "../context/NotificationContext";
 // Images moved to public folder for Vercel deployment
 const img1 = "/img1.jpg";
 const img2 = "/img2.jpg";
@@ -10,25 +9,8 @@ const logo = "/react.svg";
 
 export default function Home() {
   const { user } = useAuth();
-  const { showSuccess, showError, showInfo, showWarning } = useNotification();
   const isLoggedIn = Boolean(user);
   const isAdmin = user?.role === "Admin";
-
-  const testNotifications = () => {
-    showSuccess("Test Success", "This is a success notification!");
-    setTimeout(
-      () => showError("Test Error", "This is an error notification!"),
-      1000
-    );
-    setTimeout(
-      () => showInfo("Test Info", "This is an info notification!"),
-      2000
-    );
-    setTimeout(
-      () => showWarning("Test Warning", "This is a warning notification!"),
-      3000
-    );
-  };
 
   const primaryCtaText = isAdmin ? "Create Class" : "Browse Classes";
   const secondaryCtaText = isAdmin ? "Create Session" : "Upcoming Sessions";
@@ -98,24 +80,6 @@ export default function Home() {
             >
               {secondaryCtaText}
             </Link>
-            <button
-              onClick={testNotifications}
-              style={{
-                ...ctaStyle("#9b59b6"),
-                border: "none",
-                cursor: "pointer",
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform =
-                  "translateY(-2px) scale(1.03)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "translateY(0) scale(1)")
-              }
-            >
-              Test Notifications
-            </button>
           </div>
         </div>
         <div>

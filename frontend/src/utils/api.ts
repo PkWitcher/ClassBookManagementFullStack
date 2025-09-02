@@ -2,6 +2,7 @@
 import type { User, Class, Session, Booking } from "../types";
 
 const API_URL = "https://classbookmanagementfullstack.onrender.com";
+//const API_URL = "http://localhost:5000";
 
 // Generic fetch wrapper
 async function apiFetch<T>(

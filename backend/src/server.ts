@@ -10,14 +10,17 @@ import healthRoutes from "./routes/health";
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // ----------------------
 // CORS middleware (must be first)
 // ----------------------
 app.use(
   cors({
-    origin: ["https://class-book-management-full-stack.vercel.app"],
+    origin: [
+      "https://class-book-management-full-stack.vercel.app",
+      "http://localhost:3000",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
