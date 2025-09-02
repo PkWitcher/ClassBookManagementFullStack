@@ -17,7 +17,7 @@ const port = process.env.PORT || 5001;
 // ----------------------
 app.use(
   cors({
-    origin: ["https://classbookmanagementfullstack.onrender.com"],
+    origin: ["https://class-book-management-full-stack.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
