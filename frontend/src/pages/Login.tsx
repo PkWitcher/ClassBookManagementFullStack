@@ -11,6 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // <-- Added loading state
   const { login } = useAuth();
   const { showSuccess, showError } = useNotification();
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true); // <-- Start loading
 
     try {
       await login(email, password);
@@ -30,6 +32,8 @@ export default function Login() {
       const errorMessage = "Invalid email or password. Please try again.";
       setError(errorMessage);
       showError("Login Failed", errorMessage);
+    } finally {
+      setLoading(false); // <-- Stop loading
     }
   };
 
@@ -90,6 +94,10 @@ export default function Login() {
             </p>
           )}
 
+          {loading && (
+            <p style={{ color: "#3498db", textAlign: "center" }}>Loading...</p>
+          )}
+
           <input
             type="email"
             value={email}
@@ -105,6 +113,7 @@ export default function Login() {
               width: "100%",
               boxSizing: "border-box",
             }}
+            disabled={loading}
           />
 
           <div style={{ position: "relative" }}>
@@ -124,6 +133,7 @@ export default function Login() {
                 boxSizing: "border-box",
                 paddingRight: "2.5rem",
               }}
+              disabled={loading}
             />
             <button
               type="button"
@@ -140,6 +150,7 @@ export default function Login() {
                 color: "#666",
                 padding: "0.25rem",
               }}
+              disabled={loading}
             >
               {showPassword ? "👁️" : "👁️‍🗨️"}
             </button>
@@ -157,6 +168,7 @@ export default function Login() {
               cursor: "pointer",
               fontWeight: "500",
               transition: "background 0.2s ease",
+              opacity: loading ? 0.7 : 1,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#2980b9";
@@ -164,6 +176,7 @@ export default function Login() {
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "#3498db";
             }}
+            disabled={loading}
           >
             Login
           </button>
