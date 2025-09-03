@@ -12,6 +12,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false); // <-- Added loading state
   const { register } = useAuth();
   const { showSuccess, showError, showInfo } = useNotification();
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Register() {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true); // <-- Start loading
 
     // Log what will be sent
     console.log("Registering with:", { email, password });
@@ -55,6 +57,8 @@ export default function Register() {
         setError(errorMessage);
         showError("Registration Failed", errorMessage);
       }
+    } finally {
+      setLoading(false); // <-- Stop loading
     }
   };
 
@@ -127,6 +131,10 @@ export default function Register() {
             </p>
           )}
 
+          {loading && (
+            <p style={{ color: "#27ae60", textAlign: "center" }}>Loading...</p>
+          )}
+
           <input
             type="email"
             value={email}
@@ -142,6 +150,7 @@ export default function Register() {
               width: "100%",
               boxSizing: "border-box",
             }}
+            disabled={loading}
           />
 
           <div style={{ position: "relative" }}>
@@ -161,6 +170,7 @@ export default function Register() {
                 boxSizing: "border-box",
                 paddingRight: "2.5rem",
               }}
+              disabled={loading}
             />
             <button
               type="button"
@@ -177,6 +187,7 @@ export default function Register() {
                 color: "#666",
                 padding: "0.25rem",
               }}
+              disabled={loading}
             >
               {showPassword ? "👁️" : "👁️‍🗨️"}
             </button>
@@ -194,6 +205,7 @@ export default function Register() {
               cursor: "pointer",
               fontWeight: "500",
               transition: "background 0.2s ease",
+              opacity: loading ? 0.7 : 1,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#1e8449";
@@ -201,6 +213,7 @@ export default function Register() {
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "#27ae60";
             }}
+            disabled={loading}
           >
             Register
           </button>
